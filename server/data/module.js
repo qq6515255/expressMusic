@@ -1,11 +1,12 @@
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 
-mongoose.connect('mongodb://localhost:27017/test93');
-// 用户
-var usersSchema = new mongoose.Schema({
+mongoose.connect("mongodb://localhost:27017/tao", { useMongoClient: true });
+
+// 管路员用户
+var adminSchema = new mongoose.Schema({
   username: String,
   password: String,
-  isAdmin:{
+  isAdmin: {
     type: Boolean,
     default: false
   },
@@ -13,6 +14,15 @@ var usersSchema = new mongoose.Schema({
     type: String,
     default: Date.now()
   }
+});
+// 用户
+var userSchema = new mongoose.Schema({
+  name: String,
+  password: String,
+  nickName: String,
+  type: String,
+  token: String,
+  avatar: String
 });
 // 分类
 var categorySchema = new mongoose.Schema({
@@ -28,18 +38,18 @@ var articleSchema = new mongoose.Schema({
   category: String,
   author: {
     type: String,
-    default: 'admin'
+    default: "admin"
   },
   content: String,
   time: {
     type: String,
     default: Date.now()
   },
-  views:{
+  views: {
     type: Number,
     default: 0
   },
-  like:{
+  like: {
     type: Number,
     default: 0
   },
@@ -50,8 +60,9 @@ var articleSchema = new mongoose.Schema({
 });
 
 Model = {
-  User: mongoose.model('User', usersSchema),
-  Category: mongoose.model('Category', categorySchema),
-  Article: mongoose.model('Article', articleSchema)
-}
-module.exports = Model
+  Users: mongoose.model("Users", userSchema),
+  User: mongoose.model("Admin", adminSchema),
+  Category: mongoose.model("Category", categorySchema),
+  Article: mongoose.model("Article", articleSchema)
+};
+module.exports = Model;
