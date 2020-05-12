@@ -17,6 +17,16 @@
       <p>内容简介</p>
       <textarea v-model="articleContent"></textarea>
     </div>
+    <div class="upload-mp3">
+      <p class="title">上传歌曲</p>
+      <button type="button" class="fix">点击上传</button>
+      <!-- <el-input-number
+        v-model="num"
+        controls-position="right"
+        :min="0"
+        :max="10"
+      ></el-input-number> -->
+    </div>
     <div class="edit">
       <!-- <quill-editor
         class="articleContent"
@@ -38,6 +48,7 @@ import navBread from "../../components/navBread";
 export default {
   data() {
     return {
+      num: 1,
       articleName: "",
       articleCategory: "",
       articleContent: "",
@@ -97,5 +108,18 @@ button {
 }
 .articleContent {
   height: 250px;
+}
+.upload-mp3 {
+  display: flex;
+  flex-direction: column;
+  margin-left: 40px;
+  .title {
+    line-height: 40px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  .fix {
+    margin: 0;
+  }
 }
 </style>
