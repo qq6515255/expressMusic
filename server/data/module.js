@@ -48,7 +48,47 @@ var categorySchema = new mongoose.Schema({
     default: Date.now()
   }
 });
-// 文章
+// 歌曲
+var songSchema = new mongoose.Schema({
+  title: String,
+  al:{
+    type:Object,
+    default:{}
+  },
+  artist:{
+    type: String,
+    default: ''
+  },
+  lrc:{
+    type: String,
+    default: ''
+  },
+  publishTime:{
+    type: String,
+    default: ''
+  },
+  singerId:{
+    type:Number,
+    default:null
+  },
+  pic:{
+    type: String,
+    default: ''
+  },
+  src:{
+    type: String,
+    default: ''
+  },
+  title:{
+    type: String,
+    default: ''
+  },
+  time: {
+    type: String,
+    default: Date.now()
+  }
+});
+// 内容
 var contentSchema = new mongoose.Schema({
   title: String,
   category: String,
@@ -56,12 +96,13 @@ var contentSchema = new mongoose.Schema({
     type: String,
     default: "admin"
   },
-  content: String,
+  content: String,//描述
   time: {
     type: String,
     default: Date.now()
   },
-  views: {
+  cover:String,
+  views: { //点击次数
     type: Number,
     default: 0
   },
@@ -69,7 +110,8 @@ var contentSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
-  comment: {
+  songs:Object, //歌曲
+  comment: { //评论
     type: Array,
     default: []
   }
@@ -80,6 +122,7 @@ Model = {
   User: mongoose.model("Admin", adminSchema),
   Category: mongoose.model("Category", categorySchema),
   Content: mongoose.model("Content", contentSchema),
-  Banner: mongoose.model("Banner", bannerSchema)
+  Banner: mongoose.model("Banner", bannerSchema),
+  Song: mongoose.model("Song", songSchema)
 };
 module.exports = Model;

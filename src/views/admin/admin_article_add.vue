@@ -5,7 +5,7 @@
     </nav-bread>
     <div class="form-group">
       <p>内容名称</p>
-      <input type="text" v-model="articleName" placeholder="请输入文章名称" />
+      <input type="text" v-model="articleName" placeholder="请输入内容名称" />
     </div>
     <div class="form-group">
       <p>内容分类</p>
@@ -53,7 +53,10 @@ export default {
       articleCategory: "",
       articleContent: "",
       categoryData: "",
-      editorOption: {}
+      editorOption: {},
+      songList:[],
+      show:false,
+      
     };
   },
   components: {

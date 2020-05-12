@@ -216,7 +216,7 @@ router.get("/admin_content", function(req, res, next) {
       .then(function(doc) {
         // console.log(doc);
         responseData.code = 200;
-        responseData.message = "查找所有文章成功";
+        responseData.message = "查找所有内容成功";
         responseData.data = doc;
         responseData.count = count;
         responseData.limit = limit;
@@ -237,7 +237,7 @@ router.get("/admin_category_add", function(req, res, next) {
       return;
     } else {
       responseData.code = 200;
-      responseData.message = "查询文章分类成功";
+      responseData.message = "查询内容分类成功";
       responseData.data = doc;
       res.json(responseData);
     }
@@ -261,7 +261,7 @@ router.post("/admin_content_add", function(req, res, next) {
       return;
     } else {
       responseData.code = 200;
-      responseData.message = "查询文章分类成功";
+      responseData.message = "查询内容分类成功";
       responseData.data = doc;
       res.json(responseData);
     }
@@ -288,7 +288,7 @@ router.get("/admin_content_update", function(req, res, next) {
       return;
     } else {
       responseData.code = 200;
-      responseData.message = "查询要修改文章成功";
+      responseData.message = "查询要修改内容成功";
       responseData.data = doc;
       res.json(responseData);
     }
@@ -330,7 +330,7 @@ router.get("/admin_content_comment", function(req, res, next) {
       return;
     } else {
       responseData.code = 200;
-      responseData.message = "查询当前文章,所有的评论成功";
+      responseData.message = "查询当前内容,所有的评论成功";
       responseData.data = doc;
       res.json(responseData);
     }
