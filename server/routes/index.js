@@ -42,7 +42,7 @@ router.get("/index_category", function(req, res, next) {
 });
 
 // 查找单个分类的数据
-router.get("/index_article_category", function(req, res, next) {
+router.get("/index_content_category", function(req, res, next) {
   var categoryy = req.query.category;
   console.log("单个分类名为:" + categoryy);
   var newData = { category: categoryy };
@@ -50,13 +50,13 @@ router.get("/index_article_category", function(req, res, next) {
   var page = Number(req.query.page || 1);
   var limit = 4;
   var pages = 0;
-  Model.Article.count(newData).then(function(count) {
+  Model.Content.count(newData).then(function(count) {
     pages = Math.ceil(count / limit); //总数据除以每页限制数据=页数
     page = Math.min(page, pages);
     page = Math.max(page, 1);
     var skip = (page - 1) * limit;
 
-    Model.Article.find(newData)
+    Model.Content.find(newData)
       .sort({ _id: -1 })
       .limit(limit)
       .skip(skip)
@@ -77,17 +77,17 @@ router.get("/index_article_category", function(req, res, next) {
 });
 
 // 查找所有文章
-router.get("/index_article", function(req, res, next) {
+router.get("/index_content", function(req, res, next) {
   var page = Number(req.query.page || 1);
   var limit = 4;
   var pages = 0;
-  Model.Article.count().then(function(count) {
+  Model.Content.count().then(function(count) {
     pages = Math.ceil(count / limit); //总数据除以每页限制数据=页数
     page = Math.min(page, pages);
     page = Math.max(page, 1);
     var skip = (page - 1) * limit;
 
-    Model.Article.find({})
+    Model.Content.find({})
       .sort({ _id: -1 })
       .limit(limit)
       .skip(skip)
@@ -111,7 +111,7 @@ router.get("/index_article", function(req, res, next) {
 router.get("/index_detail", function(req, res, next) {
   var _id = req.query._id;
   console.log(_id);
-  Model.Article.findOne({ _id: _id }, function(err, doc) {
+  Model.Content.findOne({ _id: _id }, function(err, doc) {
     if (err) {
       console.log(err);
       return;
@@ -131,7 +131,7 @@ router.get("/index_detail", function(req, res, next) {
 router.get("/index_detail_comment", function(req, res, next) {
   var _id = req.query._id;
   console.log("传过来的id为:" + _id);
-  Model.Article.findOne({ _id: _id }, function(err, doc) {
+  Model.Content.findOne({ _id: _id }, function(err, doc) {
     if (err) {
       console.log(err);
       return;
@@ -198,7 +198,7 @@ router.post("/index_detail", function(req, res, next) {
     comments: newComment,
     time: time
   };
-  Model.Article.findOne({ _id: _id }, function(err, doc) {
+  Model.Content.findOne({ _id: _id }, function(err, doc) {
     if (err) {
       console.log(err);
       return;
@@ -216,7 +216,7 @@ router.post("/index_detail", function(req, res, next) {
 router.post("/index_detail_like", function(req, res, next) {
   var like = req.body.like;
   var _id = req.body._id;
-  Model.Article.findOne({ _id: _id }, function(err, doc) {
+  Model.Content.findOne({ _id: _id }, function(err, doc) {
     if (err) {
       console.log(err);
       return;
@@ -234,7 +234,7 @@ router.post("/index_detail_like", function(req, res, next) {
 router.post("/index_detail_noLike", function(req, res, next) {
   var like = req.body.like;
   var _id = req.body._id;
-  Model.Article.findOne({ _id: _id }, function(err, doc) {
+  Model.Content.findOne({ _id: _id }, function(err, doc) {
     if (err) {
       console.log(err);
       return;

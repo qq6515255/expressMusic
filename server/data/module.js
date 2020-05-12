@@ -15,6 +15,22 @@ var adminSchema = new mongoose.Schema({
     default: Date.now()
   }
 });
+var bannerSchema = new mongoose.Schema({
+  imgURl: String,
+  link: String,
+  title: {
+    type: String,
+    default: `Xian'Music`
+  },
+  status: {
+    type: String,
+    default: 1 //1启用0禁用
+  },
+  time: {
+    type: String,
+    default: Date.now()
+  }
+});
 // 用户
 var userSchema = new mongoose.Schema({
   name: String,
@@ -33,7 +49,7 @@ var categorySchema = new mongoose.Schema({
   }
 });
 // 文章
-var articleSchema = new mongoose.Schema({
+var contentSchema = new mongoose.Schema({
   title: String,
   category: String,
   author: {
@@ -63,6 +79,7 @@ Model = {
   Users: mongoose.model("Users", userSchema),
   User: mongoose.model("Admin", adminSchema),
   Category: mongoose.model("Category", categorySchema),
-  Article: mongoose.model("Article", articleSchema)
+  Content: mongoose.model("Content", contentSchema),
+  Banner: mongoose.model("Banner", bannerSchema)
 };
 module.exports = Model;

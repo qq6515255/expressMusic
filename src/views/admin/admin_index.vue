@@ -3,22 +3,16 @@
     <h1>涉及技术</h1>
     <section class="admin_index_box">
       <div class="admin_index_item">
-          <img src="../../assets/logo.png" alt="">
-        <p class="text">
-          <span>前端:</span> vue.js + vue-router + axios
-        </p>
+        <img src="../../assets/logo.png" alt="" />
+        <p class="text"><span>前端:</span> vue.js + vue-router + axios</p>
       </div>
       <div class="admin_index_item">
-        <img src="../../assets/nodejs.png" alt="">
-        <p class="text">
-          <span>后台:</span> express + element-ui
-        </p>
+        <img src="../../assets/nodejs.png" alt="" />
+        <p class="text"><span>后台:</span> express + element-ui</p>
       </div>
       <div class="admin_index_item">
-        <img src="../../assets/mongo-db.png" alt="">
-        <p class="text">
-          <span>数据库:</span> mongodb + mongoose
-        </p>
+        <img src="../../assets/mongo-db.png" alt="" />
+        <p class="text"><span>数据库:</span> mongodb + mongoose</p>
       </div>
     </section>
     <h1>功能总概</h1>
@@ -46,8 +40,12 @@
           <li><i class="el-icon-circle-cross"></i>七牛云图片上传</li>
           <li><i class="el-icon-circle-cross"></i>分页组件化</li>
           <li><i class="el-icon-circle-cross"></i>评论分页</li>
-          <li><i class="el-icon-circle-cross"></i>分类删除后，文章还显示原来分类</li>
-          <li><i class="el-icon-circle-cross"></i>富文本编辑器，转发显示有点问题</li>
+          <li>
+            <i class="el-icon-circle-cross"></i>分类删除后，文章还显示原来分类
+          </li>
+          <li>
+            <i class="el-icon-circle-cross"></i>富文本编辑器，转发显示有点问题
+          </li>
         </ul>
       </div>
     </section>
@@ -55,52 +53,51 @@
 </template>
 
 <script>
-export default {
-}
+export default {};
 </script>
 
 <style lang="less">
-.admin_index{
-  h1{
+.admin_index {
+  h1 {
     height: 80px;
     line-height: 80px;
     text-align: center;
     font-size: 22px;
   }
-  .admin_index_box{
+  .admin_index_box {
     display: flex;
-    .admin_index_item{
+    .admin_index_item {
       flex: 1;
       text-align: center;
-      img{
+      img {
         width: 100px;
         height: 100px;
       }
-      .text{
+      .text {
         height: 50px;
         line-height: 50px;
-        span{
+        span {
           color: #4fc08d;
         }
       }
     }
   }
-  .admin_index_desc{
-    margin-top:20px;
+  .admin_index_desc {
+    margin-top: 20px;
     text-align: center;
-    .admin_index_desc_box{
+    .admin_index_desc_box {
       display: flex;
-      ul{
+      ul {
         flex: 1;
-        li{
+        li {
           height: 40px;
           line-height: 40px;
           border-bottom: 1px solid #f5f5f5;
           text-align: left;
-          &.title{
+          &.title {
             color: #4fc08d;
           }
-          i{
+          i {
             display: inline-block;
             margin-right: 10px;
           }
@@ -109,5 +106,4 @@ export default {
     }
   }
 }
-
 </style>
