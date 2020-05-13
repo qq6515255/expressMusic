@@ -76,7 +76,7 @@ router.get("/index_content_category", function(req, res, next) {
   });
 });
 
-// 查找所有文章
+// 查找所有内容
 router.get("/index_content", function(req, res, next) {
   var page = Number(req.query.page || 1);
   var limit = 4;
@@ -90,11 +90,12 @@ router.get("/index_content", function(req, res, next) {
     Model.Content.find({})
       .sort({ _id: -1 })
       .limit(limit)
+      .populate('songs')
       .skip(skip)
       .then(function(doc) {
         console.log(doc);
         responseData.code = 200;
-        responseData.message = "查找所有文章成功";
+        responseData.message = "查找所有内容成功";
         responseData.data = doc;
         responseData.count = count;
         responseData.limit = limit;
@@ -107,7 +108,7 @@ router.get("/index_content", function(req, res, next) {
   });
 });
 
-//文章详情
+//内容详情
 router.get("/index_detail", function(req, res, next) {
   var _id = req.query._id;
   console.log(_id);
@@ -119,7 +120,7 @@ router.get("/index_detail", function(req, res, next) {
       doc.views++;
       doc.save();
       responseData.code = 200;
-      responseData.message = "查找一篇文章成功";
+      responseData.message = "查找一篇内容成功";
       responseData.data = doc;
       console.log(responseData);
       res.json(responseData);
@@ -127,7 +128,7 @@ router.get("/index_detail", function(req, res, next) {
   });
 });
 
-// 查找一篇文章的评论
+// 查找一篇内容的评论
 router.get("/index_detail_comment", function(req, res, next) {
   var _id = req.query._id;
   console.log("传过来的id为:" + _id);
@@ -136,9 +137,9 @@ router.get("/index_detail_comment", function(req, res, next) {
       console.log(err);
       return;
     } else {
-      console.log("查找一篇文章，所有评论成功" + doc);
+      console.log("查找一篇内容，所有评论成功" + doc);
       responseData.code = 200;
-      responseData.message = "查找一篇文章，所有评论成功";
+      responseData.message = "查找一篇内容，所有评论成功";
       responseData.data = doc.comment;
       res.json(responseData);
     }
@@ -181,7 +182,7 @@ router.get("/index_detail_comment", function(req, res, next) {
 //   })
 // })
 
-// 文章详情,提交新的评论
+// 内容详情,提交新的评论
 router.post("/index_detail", function(req, res, next) {
   var newComment = req.body.newComment;
   var _id = req.body._id;
@@ -246,6 +247,39 @@ router.post("/index_detail_noLike", function(req, res, next) {
       responseData.data = doc;
       res.json(responseData);
     }
+  });
+});
+router.get("/index_banner", function (req, res, next) {
+  var page = Number(req.query.page || 1);
+  // var test = JSON.stringify(req);
+  console.log("req===>", req);
+  var key = req.query.status ? {
+    status: 1
+  } : {};
+  var limit = 4;
+  var pages = 0;
+  Model.Banner.count().then(function (count) {
+    pages = Math.ceil(count / limit); //总数据除以每页限制数据=页数
+    page = Math.min(page, pages);
+    page = Math.max(page, 1);
+    var skip = (page - 1) * limit;
+
+    Model.Banner.find(key)
+      .limit(limit)
+      .skip(skip)
+      .then(function (doc) {
+        console.log("doc==>", doc);
+        responseData.code = 200;
+        responseData.message = "获取轮播图成功";
+        responseData.data = doc;
+        responseData.count = count;
+        responseData.limit = limit;
+        responseData.page = page;
+        responseData.pages = pages;
+        responseData.skip = skip;
+        console.log(responseData);
+        res.json(responseData);
+      });
   });
 });
 

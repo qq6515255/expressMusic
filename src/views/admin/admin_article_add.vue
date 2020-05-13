@@ -17,6 +17,27 @@
       <p>内容简介</p>
       <textarea v-model="articleContent"></textarea>
     </div>
+          <div class="form-group">
+        <p class="fix">封面上传</p>
+        <el-upload
+          accept=".png,.jpg"
+          list-type="picture"
+          class="upload-demo"
+          action="1"
+          :limit="1"
+          ref="cover"
+          :http-request="contentUpload"
+          :on-remove="contentRemove"
+
+        >
+          <el-button size="small" class="test" type="primary"
+            >点击上传</el-button
+          >
+          <div slot="tip" class="el-upload__tip">
+            只能上传jpg/png文件，且不超过500kb
+          </div>
+        </el-upload>
+      </div>
     <div class="upload-mp3">
       <p class="title">上传歌曲</p>
       <button type="button" @click="show=!show" class="fix">点击上传</button>
@@ -140,6 +161,7 @@ export default {
       editorOption: {},
       songList: [],
       show: false,
+      contentCover:[],
       songFile: [],
       songCovers: [],
       //添加表单的内容
@@ -161,6 +183,7 @@ export default {
       fd.append("title", this.articleName);
       fd.append("category", this.articleCategory);
       fd.append("content", this.articleContent);
+      fd.append("contentCover", this.contentCover[0]);
       fd.append("songs", JSON.stringify(this.songList));
       this.songFile.forEach((e, i) => {
         fd.append(`songFile-${i}`, this.songFile[i]);
@@ -185,9 +208,16 @@ export default {
     mp3Remove(file, fileList) {
       this.src = [];
     },
+    contentRemove(file, fileList) {
+      this.contentCover = [];
+    },
     upload(item) {
       console.log(item);
       this.pic.push(item.file);
+    },
+    contentUpload(item) {
+      console.log(item);
+      this.contentCover.push(item.file);
     },
     mp3Upload(item) {
       console.log(item);
@@ -241,7 +271,7 @@ button {
   margin-top: 0;
 }
 .edit {
-  margin: 0 40px;
+  margin: 0 80px;
 }
 .articleContent {
   height: 250px;
@@ -249,7 +279,7 @@ button {
 .upload-mp3 {
   display: flex;
   flex-direction: column;
-  margin-left: 40px;
+  // margin-left: 40px;
   .title {
     line-height: 40px;
     font-weight: bold;
@@ -258,6 +288,7 @@ button {
   .fix {
     margin: 0;
     flex: 0;
+    margin-left: 80px;
   }
 }
 .add-box {
@@ -309,5 +340,8 @@ button {
 }
 .list {
   margin: 30px 0px;
+}
+.upload-demo{
+  width: 70%
 }
 </style>

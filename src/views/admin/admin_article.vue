@@ -120,7 +120,7 @@ export default {
             .then(() => {
               this.$message({
                 type: "success",
-                message: "删除一篇文章成功!"
+                message: "删除一篇内容成功!"
               });
               this.getData();
             });

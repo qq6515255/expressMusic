@@ -230,7 +230,7 @@ router.get("/admin_content", function (req, res, next) {
         _id: -1
       })
       .limit(limit)
-      .skip(skip)
+      .skip(skip).populate('songs')
       .then(function (doc) {
         // console.log(doc);
         responseData.code = 200;
@@ -282,21 +282,24 @@ router.post("/admin_content_add", multipartyMiddleware, function (req, res, next
       if (e.split('-')[0] == 'contentCover') {
 
       }
-      return new Promise((res, rej) => {
+      return new Promise((result, rej) => {
         let ImgName = "";
         let saveImg = "";
         let fileName = ""
-        let flag = 0;
         let name = e.split('-');
         if (name[0] == 'songCovers') {
           fileName = `-cover.${req.files[e].type.split("/")[1]}`
         } else if (name[0] == 'songFile') {
           fileName = '.mp3'
-        } else {
-          flag = -1;
+        } 
+        ImgName = D + name[1] + fileName;
+        saveImg = path.join(__dirname, "../public/songs/" + ImgName); 
+
+        if (e.split('-')[0] == 'contentCover') {
+          fileName = `-cover.${req.files[e].type.split("/")[1]}`
+          ImgName = D -1 + fileName;
+          saveImg = path.join(__dirname, "../public/content/" + ImgName); 
         }
-        ImgName = D + name[1] + flag + fileName;
-        saveImg = path.join(__dirname, "../public/songs/" + ImgName); //api.js的上级的static下
         fs.readFile(req.files[e].path, (err, data) => {
           if (err) throw err;
           fs.writeFile(saveImg, data, function (err) {
@@ -305,15 +308,15 @@ router.post("/admin_content_add", multipartyMiddleware, function (req, res, next
             } else {
               console.log("写入成功！", saveImg);
               let cover = `${config.HOST}:${config.PORT}/songs/${ImgName}`;
-
               if (name[0] == 'songCovers') {
                 coverList[name[1]] = cover;
               } else if (name[0] == 'songFile') {
                 srcList[name[1]] = cover;
               } else {
+                cover = `${config.HOST}:${config.PORT}/content/${ImgName}`;
                 contentCover = cover;
               }
-              res(saveImg);
+              result(saveImg);
             }
           });
         });
@@ -323,13 +326,13 @@ router.post("/admin_content_add", multipartyMiddleware, function (req, res, next
     return file
   }
 
-  initFile().then(res => {
+  initFile().then(test => {
     songs.forEach((e, i) => {
       e.src = srcList[i]
       e.pic = coverList[i]
       songList.push(e);
     })
-    console.log('songList===>', songList)
+    console.log('contentCover===>', contentCover)
     Model.Song.insertMany(songList, (error, doc) => {
       let list = doc.map((e) => {
         return e._id;
@@ -338,44 +341,20 @@ router.post("/admin_content_add", multipartyMiddleware, function (req, res, next
         title,
         content,
         category,
-
+        songs:list,
+        cover:contentCover
       }
-      Model.Content.create()
-      console.log('新建成功===>', doc)
-      console.log('新建成功_id===>', list)
+      Model.Content.create(newContent,(error,doc)=>{
+        responseData.code = 200;
+        responseData.message = "增加新的内容成功";
+        responseData.data = doc;
+        res.json(responseData);
+      })
     })
   })
 
-
-
-
-
-
-
-
-  // var title = req.body.articleName;
-  // var category = req.body.articleCategory;
-  // var content = req.body.articleContent;
-  // var time = yy + "-" + MM + "-" + dd + " " + hh + ":" + mm + ":" + ss;
-  // var newContent = {
-  //   title: title,
-  //   category: category,
-  //   content: content,
-  //   time: time
-  // };
-  // Model.Content.create(newContent, function(err, doc) {
-  //   if (err) {
-  //     console.log(err);
-  //     return;
-  //   } else {
-  //     responseData.code = 200;
-  //     responseData.message = "查询内容分类成功";
-  //     responseData.data = doc;
-  //     res.json(responseData);
-  //   }
-  // });
 });
-// 文章删除
+// 内容删除
 router.post("/admin_content_del", function (req, res, next) {
   var _id = req.body._id;
   Model.Content.remove({
@@ -389,7 +368,7 @@ router.post("/admin_content_del", function (req, res, next) {
     }
   });
 });
-// 跳转到文章修改页面
+// 跳转到内容修改页面
 router.get("/admin_content_update", function (req, res, next) {
   var _id = req.query._id;
   Model.Content.findOne({
@@ -407,11 +386,11 @@ router.get("/admin_content_update", function (req, res, next) {
   });
 });
 
-// 文章修改
+// 内容修改
 router.post("/admin_content_update", function (req, res, next) {
   var articleTitle = req.body.articleTitle;
   var articleCategory = req.body.articleCategory;
-  console.log("新的文章分类为" + articleCategory);
+  console.log("新的内容分类为" + articleCategory);
   var articleContent = req.body.articleContent;
   var articleId = req.body.articleId;
   var newContent = {
@@ -437,7 +416,7 @@ router.post("/admin_content_update", function (req, res, next) {
   });
 });
 
-// 跳转到文章评论管理页面
+// 跳转到内容评论管理页面
 router.get("/admin_content_comment", function (req, res, next) {
   var _id = req.query._id;
   Model.Content.findOne({
@@ -455,7 +434,7 @@ router.get("/admin_content_comment", function (req, res, next) {
   });
 });
 
-// 删除当前文章的一个评论
+// 删除当前内容的一个评论
 router.post("/admin_content_comment", function (req, res, next) {
   var _id = req.body._id;
   var user = req.body.user;
@@ -477,7 +456,7 @@ router.post("/admin_content_comment", function (req, res, next) {
       doc.comment.remove(delData);
       doc.save();
       responseData.code = 200;
-      responseData.message = "删除当前文章,一条评论成功";
+      responseData.message = "删除当前内容,一条评论成功";
       responseData.data = doc;
       res.json(responseData);
     }
@@ -519,8 +498,6 @@ router.get("/admin_banner", function (req, res, next) {
 });
 // 新增轮播
 router.post("/admin_banner_add", multipartyMiddleware, function (req, res) {
-  // var form = new multiparty.Form({ uploadDir: UPLOADPATH });
-  // form.encoding = "utf-8";
   var {
     link,
     title
