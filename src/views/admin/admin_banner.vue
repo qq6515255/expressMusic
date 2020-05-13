@@ -159,9 +159,9 @@ export default {
         });
         return;
       }
-      this.$http.get("/admin/admin_users?page=" + this.page).then(response => {
+      this.$http.get("/admin/admin_banner?page=" + this.page).then(response => {
         console.log(response.data);
-        this.users = response.data.data;
+        this.banner = response.data.data;
       });
     },
     prev() {
@@ -174,12 +174,12 @@ export default {
         });
         return;
       }
-      this.$http.get("/admin/admin_users?page=" + this.page).then(response => {
+      this.$http.get("/admin/admin_banner?page=" + this.page).then(response => {
         console.log(this.$route.path);
         console.log(this.$route.fullPath);
         console.log(window.location.href);
         console.log(response.data);
-        this.users = response.data.data;
+        this.banner = response.data.data;
       });
     }
   },

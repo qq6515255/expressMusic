@@ -1,6 +1,8 @@
 var mongoose = require("mongoose");
-
-mongoose.connect("mongodb://localhost:27017/tao", { useMongoClient: true });
+const Schema = mongoose.Schema;
+mongoose.connect("mongodb://localhost:27017/tao", {
+  useMongoClient: true
+});
 
 // 管路员用户
 var adminSchema = new mongoose.Schema({
@@ -50,42 +52,41 @@ var categorySchema = new mongoose.Schema({
 });
 // 歌曲
 var songSchema = new mongoose.Schema({
-  title: String,
-  al:{
-    type:Object,
-    default:{}
+  al: {
+    type: Object,
+    default: {}
   },
-  artist:{
-    type: String,
-    default: ''
-  },
-  lrc:{
-    type: String,
-    default: ''
-  },
-  publishTime:{
-    type: String,
-    default: ''
-  },
-  singerId:{
-    type:Number,
-    default:null
-  },
-  pic:{
-    type: String,
-    default: ''
-  },
-  src:{
-    type: String,
-    default: ''
-  },
-  title:{
-    type: String,
-    default: ''
+  singerId: {
+    type: Number,
+    default: null
   },
   time: {
     type: String,
     default: Date.now()
+  },
+  artist: {
+    type: String,
+    default: ""
+  },
+  lrc: {
+    type: String,
+    default: ""
+  },
+  publishTime: {
+    type: String,
+    default: ""
+  },
+  pic: {
+    type: String,
+    default: ""
+  },
+  src: {
+    type: String,
+    default: ""
+  },
+  title: {
+    type: String,
+    default: ""
   }
 });
 // 内容
@@ -96,13 +97,14 @@ var contentSchema = new mongoose.Schema({
     type: String,
     default: "admin"
   },
-  content: String,//描述
+  content: String, //描述
   time: {
     type: String,
     default: Date.now()
   },
-  cover:String,
-  views: { //点击次数
+  cover: String,
+  views: {
+    //点击次数
     type: Number,
     default: 0
   },
@@ -110,8 +112,13 @@ var contentSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
-  songs:Object, //歌曲
-  comment: { //评论
+  songs: [{
+    type: Schema.Types.ObjectId,
+    ref: "Song"
+  }],
+  //歌曲
+  comment: {
+    //评论
     type: Array,
     default: []
   }

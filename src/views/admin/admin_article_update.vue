@@ -45,7 +45,7 @@ export default {
       console.log(this.articleCategory);
       var that = this;
       this.$http
-        .post("/admin/admin_article_update", {
+        .post("/admin/admin_content_update", {
           articleTitle: this.articleTitle,
           articleCategory: this.articleCategory,
           articleContent: this.articleContent,
