@@ -17,30 +17,27 @@
       <p>内容简介</p>
       <textarea v-model="articleContent"></textarea>
     </div>
-          <div class="form-group">
-        <p class="fix">封面上传</p>
-        <el-upload
-          accept=".png,.jpg"
-          list-type="picture"
-          class="upload-demo"
-          action="1"
-          :limit="1"
-          ref="cover"
-          :http-request="contentUpload"
-          :on-remove="contentRemove"
-
-        >
-          <el-button size="small" class="test" type="primary"
-            >点击上传</el-button
-          >
-          <div slot="tip" class="el-upload__tip">
-            只能上传jpg/png文件，且不超过500kb
-          </div>
-        </el-upload>
-      </div>
+    <div class="form-group">
+      <p class="fix">封面上传</p>
+      <el-upload
+        accept=".png,.jpg"
+        list-type="picture"
+        class="upload-demo"
+        action="1"
+        :limit="1"
+        ref="cover"
+        :http-request="contentUpload"
+        :on-remove="contentRemove"
+      >
+        <el-button size="small" class="test" type="primary">点击上传</el-button>
+        <div slot="tip" class="el-upload__tip">
+          只能上传jpg/png文件，且不超过500kb
+        </div>
+      </el-upload>
+    </div>
     <div class="upload-mp3">
       <p class="title">上传歌曲</p>
-      <button type="button" @click="show=!show" class="fix">点击上传</button>
+      <button type="button" @click="show = !show" class="fix">点击上传</button>
       <!-- <el-input-number
         v-model="num"
         controls-position="right"
@@ -49,7 +46,7 @@
       ></el-input-number> -->
     </div>
     <div class="list">
-            <table>
+      <table>
         <tr>
           <th>序号</th>
           <th>歌曲封面</th>
@@ -118,7 +115,6 @@
           ref="cover"
           :http-request="upload"
           :on-remove="remove"
-
         >
           <el-button size="small" class="test" type="primary"
             >点击上传</el-button
@@ -138,7 +134,7 @@
           :http-request="mp3Upload"
           :on-remove="mp3Remove"
         >
-          <el-button size="small"  class="test" type="primary"
+          <el-button size="small" class="test" type="primary"
             >点击上传</el-button
           >
         </el-upload>
@@ -161,7 +157,7 @@ export default {
       editorOption: {},
       songList: [],
       show: false,
-      contentCover:[],
+      contentCover: [],
       songFile: [],
       songCovers: [],
       //添加表单的内容
@@ -341,7 +337,7 @@ button {
 .list {
   margin: 30px 0px;
 }
-.upload-demo{
-  width: 70%
+.upload-demo {
+  width: 70%;
 }
 </style>

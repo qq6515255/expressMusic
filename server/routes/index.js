@@ -8,7 +8,7 @@ var dev = require("../../config/index.js");
 // console.log("dev===>", dev.dev.proxyTable["/users/*"].target);
 // 所有请求都要经过这一步，统一请求返回的数据格式
 var responseData;
-router.use(function(req, res, next) {
+router.use(function (req, res, next) {
   responseData = {
     code: 0,
     message: ""
@@ -27,13 +27,15 @@ var date = new Date(),
 var time = yy + "-" + MM + "-" + dd + " " + hh + ":" + mm + ":" + ss;
 
 /* GET home page. */
-router.get("/", function(req, res, next) {
-  res.render("index", { title: "Express" });
+router.get("/", function (req, res, next) {
+  res.render("index", {
+    title: "Express"
+  });
 });
 
 // 前台所有分类
-router.get("/index_category", function(req, res, next) {
-  Model.Category.find().then(function(doc) {
+router.get("/index_category", function (req, res, next) {
+  Model.Category.find().then(function (doc) {
     responseData.code = 200;
     responseData.message = "查找所有分类成功";
     responseData.data = doc;
@@ -42,25 +44,29 @@ router.get("/index_category", function(req, res, next) {
 });
 
 // 查找单个分类的数据
-router.get("/index_content_category", function(req, res, next) {
+router.get("/index_content_category", function (req, res, next) {
   var categoryy = req.query.category;
   console.log("单个分类名为:" + categoryy);
-  var newData = { category: categoryy };
+  var newData = {
+    category: categoryy
+  };
 
   var page = Number(req.query.page || 1);
   var limit = 4;
   var pages = 0;
-  Model.Content.count(newData).then(function(count) {
+  Model.Content.count(newData).then(function (count) {
     pages = Math.ceil(count / limit); //总数据除以每页限制数据=页数
     page = Math.min(page, pages);
     page = Math.max(page, 1);
     var skip = (page - 1) * limit;
 
     Model.Content.find(newData)
-      .sort({ _id: -1 })
+      .sort({
+        _id: -1
+      })
       .limit(limit)
       .skip(skip)
-      .then(function(doc) {
+      .then(function (doc) {
         console.log(doc);
         responseData.code = 200;
         responseData.message = "查找单个分类数据成功";
@@ -77,22 +83,24 @@ router.get("/index_content_category", function(req, res, next) {
 });
 
 // 查找所有内容
-router.get("/index_content", function(req, res, next) {
+router.get("/index_content", function (req, res, next) {
   var page = Number(req.query.page || 1);
   var limit = 4;
   var pages = 0;
-  Model.Content.count().then(function(count) {
+  Model.Content.count().then(function (count) {
     pages = Math.ceil(count / limit); //总数据除以每页限制数据=页数
     page = Math.min(page, pages);
     page = Math.max(page, 1);
     var skip = (page - 1) * limit;
 
     Model.Content.find({})
-      .sort({ _id: -1 })
+      .sort({
+        _id: -1
+      })
       .limit(limit)
       .populate('songs')
       .skip(skip)
-      .then(function(doc) {
+      .then(function (doc) {
         console.log(doc);
         responseData.code = 200;
         responseData.message = "查找所有内容成功";
@@ -109,30 +117,29 @@ router.get("/index_content", function(req, res, next) {
 });
 
 //内容详情
-router.get("/index_detail", function(req, res, next) {
+router.get("/index_detail", function (req, res, next) {
   var _id = req.query._id;
   console.log(_id);
-  Model.Content.findOne({ _id: _id }, function(err, doc) {
-    if (err) {
-      console.log(err);
-      return;
-    } else {
-      doc.views++;
-      doc.save();
+  Model.Content.findOne({
+      _id: _id
+    })
+    .populate("songs")
+    .then(function (doc) {
       responseData.code = 200;
-      responseData.message = "查找一篇内容成功";
+      responseData.message = "查询要修改内容成功";
       responseData.data = doc;
-      console.log(responseData);
       res.json(responseData);
-    }
-  });
+    });
+
 });
 
 // 查找一篇内容的评论
-router.get("/index_detail_comment", function(req, res, next) {
+router.get("/index_detail_comment", function (req, res, next) {
   var _id = req.query._id;
   console.log("传过来的id为:" + _id);
-  Model.Content.findOne({ _id: _id }, function(err, doc) {
+  Model.Content.findOne({
+    _id: _id
+  }, function (err, doc) {
     if (err) {
       console.log(err);
       return;
@@ -183,7 +190,7 @@ router.get("/index_detail_comment", function(req, res, next) {
 // })
 
 // 内容详情,提交新的评论
-router.post("/index_detail", function(req, res, next) {
+router.post("/index_detail", function (req, res, next) {
   var newComment = req.body.newComment;
   var _id = req.body._id;
   var user = req.body.user;
@@ -199,13 +206,18 @@ router.post("/index_detail", function(req, res, next) {
     comments: newComment,
     time: time
   };
-  Model.Content.findOne({ _id: _id }, function(err, doc) {
+  Model.Content.findOne({
+    _id: _id
+  }, function (err, doc) {
     if (err) {
       console.log(err);
       return;
     } else {
-      doc.comment.push(newData);
+      let comment = doc.comment
+      comment.push(newData)
+      doc.comment = comment;
       doc.save();
+      console.log('doc===>', doc);
       responseData.code = 200;
       responseData.message = "评论成功";
       responseData.data = doc;
@@ -214,10 +226,12 @@ router.post("/index_detail", function(req, res, next) {
   });
 });
 // 点赞
-router.post("/index_detail_like", function(req, res, next) {
+router.post("/index_detail_like", function (req, res, next) {
   var like = req.body.like;
   var _id = req.body._id;
-  Model.Content.findOne({ _id: _id }, function(err, doc) {
+  Model.Content.findOne({
+    _id: _id
+  }, function (err, doc) {
     if (err) {
       console.log(err);
       return;
@@ -232,10 +246,12 @@ router.post("/index_detail_like", function(req, res, next) {
   });
 });
 // 取消点赞
-router.post("/index_detail_noLike", function(req, res, next) {
+router.post("/index_detail_noLike", function (req, res, next) {
   var like = req.body.like;
   var _id = req.body._id;
-  Model.Content.findOne({ _id: _id }, function(err, doc) {
+  Model.Content.findOne({
+    _id: _id
+  }, function (err, doc) {
     if (err) {
       console.log(err);
       return;

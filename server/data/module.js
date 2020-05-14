@@ -112,15 +112,25 @@ var contentSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
-  songs: [{
-    type: Schema.Types.ObjectId,
-    ref: "Song"
-  }],
+  songs: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Song"
+    }
+  ],
   //歌曲
   comment: {
     //评论
     type: Array,
     default: []
+  },
+  status: {
+    type: Number,
+    default: 1 //正常状态
+  },
+  local: {
+    type: Boolean,
+    default: true
   }
 });
 

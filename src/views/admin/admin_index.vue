@@ -8,7 +8,7 @@
       </div>
       <div class="admin_index_item">
         <img src="../../assets/nodejs.png" alt="" />
-        <p class="text"><span>后台:</span> express + element-ui</p>
+        <p class="text"><span>后台:</span>node + express</p>
       </div>
       <div class="admin_index_item">
         <img src="../../assets/mongo-db.png" alt="" />
@@ -24,28 +24,18 @@
           <li><i class="el-icon-circle-check"></i>登录</li>
           <li><i class="el-icon-circle-check"></i>注册</li>
           <li><i class="el-icon-circle-check"></i>退出</li>
-          <li><i class="el-icon-circle-check"></i>点赞/取消点选</li>
+          <li><i class="el-icon-circle-check"></i>收藏,历史</li>
           <li><i class="el-icon-circle-check"></i>评论</li>
-          <li><i class="el-icon-circle-check"></i>浏览次数+1</li>
+          <li><i class="el-icon-circle-check"></i>音乐播放</li>
+          <li><i class="el-icon-circle-check"></i>各种音乐资源</li>
         </ul>
         <ul>
           <li class="title">后台(admin)</li>
           <li><i class="el-icon-circle-check"></i>用户管理</li>
           <li><i class="el-icon-circle-check"></i>分类管理</li>
-          <li><i class="el-icon-circle-check"></i>文章管理</li>
+          <li><i class="el-icon-circle-check"></i>内容管理</li>
           <li><i class="el-icon-circle-check"></i>评论管理</li>
-        </ul>
-        <ul>
-          <li class="title">待完善</li>
-          <li><i class="el-icon-circle-cross"></i>七牛云图片上传</li>
-          <li><i class="el-icon-circle-cross"></i>分页组件化</li>
-          <li><i class="el-icon-circle-cross"></i>评论分页</li>
-          <li>
-            <i class="el-icon-circle-cross"></i>分类删除后，文章还显示原来分类
-          </li>
-          <li>
-            <i class="el-icon-circle-cross"></i>富文本编辑器，转发显示有点问题
-          </li>
+          <li><i class="el-icon-circle-check"></i>轮播图管理</li>
         </ul>
       </div>
     </section>
