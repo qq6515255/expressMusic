@@ -132,6 +132,21 @@ router.get("/index_detail", function (req, res, next) {
     });
 
 });
+//歌曲详情
+router.get("/index_songs", function (req, res) {
+  var _id = req.query._id;
+  console.log(_id);
+  Model.Song.findOne({
+      _id: _id
+    })
+    .then(function (doc) {
+      responseData.code = 200;
+      responseData.message = "歌曲信息获取成功";
+      responseData.data = doc;
+      res.json(responseData);
+    });
+
+});
 
 // 查找一篇内容的评论
 router.get("/index_detail_comment", function (req, res, next) {
@@ -194,6 +209,7 @@ router.post("/index_detail", function (req, res, next) {
   var newComment = req.body.newComment;
   var _id = req.body._id;
   var user = req.body.user;
+  console.log('req===>',req);
   var date = new Date(),
     yy = date.getFullYear(),
     MM = date.getMonth() + 1,
@@ -203,7 +219,7 @@ router.post("/index_detail", function (req, res, next) {
     ss = date.getSeconds();
   newData = {
     user: user,
-    comments: newComment,
+    content: newComment,
     time: time
   };
   Model.Content.findOne({

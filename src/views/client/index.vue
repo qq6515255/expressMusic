@@ -5,10 +5,10 @@
     <!-- 内容 -->
     <section class="main container center">
       <!-- 左边 -->
-      <div class="left">
+      <!-- <div class="left"> -->
         <!-- 把登录后的数据传给组件 -->
-        <router-view :userCookie="userCookie"></router-view>
-      </div>
+        <!-- <router-view :userCookie="userCookie"></router-view> -->
+      <!-- </div> -->
       <div class="right">
         <div v-show="!userCookie">
           <!-- 登录 -->

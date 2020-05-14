@@ -269,13 +269,13 @@ router.get("/admin_category_add", function (req, res, next) {
     }
   });
 });
-// 文章添加操作页面
+// 内容添加操作页面
 router.post("/admin_content_add", multipartyMiddleware, function (
   req,
   res,
   next
 ) {
-  console.log(req);
+  console.log(req);/*  */
   var {
     category,
     content,

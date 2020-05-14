@@ -53,7 +53,8 @@
           </el-submenu>
           <el-submenu index="3">
             <template slot="title">
-              <i class="el-icon-setting"></i>内容管理
+              <div><i class="el-icon-setting"></i>内容管理</div>
+              
             </template>
             <el-menu-item-group>
               <router-link to="/admin_article"
@@ -66,11 +67,6 @@
                   ><i class="el-icon-plus"></i>内容增加</el-menu-item
                 ></router-link
               >
-              <!-- <router-link to="/admin_article_update"
-                ><el-menu-item index="3-3"
-                  ><i class="el-icon-edit"></i>内容修改</el-menu-item
-                ></router-link
-              > -->
               <router-link to="/admin_article_comment"
                 ><el-menu-item index="3-3"
                   ><i class="el-icon-menu"></i>评论列表</el-menu-item
@@ -79,9 +75,9 @@
             </el-menu-item-group>
           </el-submenu>
           <el-submenu index="4">
-            <template slot="title">
-              <i class="el-icon-setting"></i>轮播图管理
-            </template>
+            <div slot="title">
+                <i class="el-icon-setting"></i>轮播图管理  
+            </div>
             <el-menu-item-group>
               <router-link to="/admin_banner"
                 ><el-menu-item index="4-1"

@@ -22,7 +22,7 @@
           <td>{{ index }}</td>
           <td>{{ item.user }}</td>
           <td>{{ item.time }}</td>
-          <td>{{ item.comments }}</td>
+          <td>{{ item.content }}</td>
           <td @click="del(index, item, articleData_id)">
             <button type="button" class="delButton">删除</button>
           </td>
